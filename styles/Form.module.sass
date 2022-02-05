@@ -1,0 +1,78 @@
+$white: #ffffff
+$gray-darker: #666666
+$gray-lighter: #dfdfdf
+
+.form
+  & label
+    display: block
+
+  & input
+    width: 100%
+    height: 40px
+    padding: 5px
+
+  & textarea
+    width: 100%
+    height: 150px
+
+  & input[type="submit"]
+    display: block
+    width: 100%
+    margin: 20px 0 30px
+
+  & .file
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    gap: 10px
+    border: 1px #ccc solid
+    background-color: #f4f4f4
+    padding: 10px
+    height: 350px
+
+    & input
+      position: absolute
+      width: 0.1px
+      height: 0.1px
+      opacity: 0
+      overflow: hidden
+      z-index: -1
+
+    & label
+      position: relative
+      display: block
+      width: 50%
+      min-width: 335px
+      min-height: 45px
+      margin: 10px 0
+      padding: 0
+      background: $white
+      border: 1px solid $gray-lighter
+      color: $gray-darker
+      line-height: 45px
+      text-align: center
+      text-transform: none
+      cursor: pointer
+      transition: all 0.3s
+
+  & .imageContainer
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+    & image
+      min-width: 50%
+
+    & button
+      width: 40%
+
+.grid
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 30px
+  margin-bottom: 20px
+
+@media screen and (max-width: 600px)
+  .grid
+    grid-template-columns: 1fr
