@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '/styles/Showcase.module.sass'
+import styles from '@/styles/Showcase.module.sass'
 
 type Props = {}
 

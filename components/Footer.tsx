@@ -1,4 +1,4 @@
-import styles from '../styles/Footer.module.sass'
+import styles from '@/styles/Footer.module.sass'
 import React from 'react'
 import Link from 'next/link'
 

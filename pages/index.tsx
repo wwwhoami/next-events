@@ -1,11 +1,11 @@
+import { Event } from '@/types/event'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import qs from 'qs'
-import EventItem from '../components/EventItem'
-import Layout from '../components/Layout'
-import { getEvents } from '../lib/events'
-import styles from '../styles/Home.module.sass'
-import { Event } from '../types/event'
+import EventItem from '@/components/EventItem'
+import Layout from '@/components/Layout'
+import styles from '@/styles/Home.module.sass'
+import { getEvents } from '@/lib/events'
 
 type Props = {
   events: Event[]

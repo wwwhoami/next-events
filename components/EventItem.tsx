@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { Event } from '../types/event'
-import styles from '/styles/EventItem.module.sass'
+import { Event } from '@/types/event'
+import styles from '@/styles/EventItem.module.sass'
 
 type Props = {
   event: Event

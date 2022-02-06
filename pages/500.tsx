@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { NextPage } from 'next/types'
 import React from 'react'
-import Layout from '../components/Layout'
-import styles from '../styles/404.module.sass'
+import Layout from '@/components/Layout'
+import styles from '@/styles/404.module.sass'
 
 type Props = {}
 

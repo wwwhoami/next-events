@@ -1,12 +1,12 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import qs from 'qs'
-import EventItem from '../../components/EventItem'
-import Layout from '../../components/Layout'
-import Pagination from '../../components/Pagination'
-import { getEvents } from '../../lib/events'
-import { Event } from '../../types/event'
-import styles from '/styles/Home.module.sass'
+import EventItem from '@/components/EventItem'
+import Layout from '@/components/Layout'
+import Pagination from '@/components/Pagination'
+import { getEvents } from '@/lib/events'
+import { Event } from '@/types/event'
+import styles from '@/styles/Home.module.sass'
 
 const PAGE_SIZE = 5
 
@@ -16,7 +16,7 @@ type Props = {
   page: number
 }
 
-const EventsPage: NextPage<Props> = ({ events, total, page }: Props) => {
+const EventsPage: NextPage<Props> = ({ events, total, page }) => {
   return (
     <div className={styles.container}>
       <Layout>

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { uploadImage } from '../lib/events'
-import { EventImage } from '../types/ImageUploadResponse'
-import styles from '/styles/Form.module.sass'
+import { uploadImage } from '@/lib/events'
+import { EventImage } from '@/types/ImageUploadResponse'
+import styles from '@/styles/Form.module.sass'
 
 type Props = {
   imageUploaded: (image: EventImage) => void

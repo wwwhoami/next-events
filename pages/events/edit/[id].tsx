@@ -1,3 +1,13 @@
+import useModal from '@/components/hooks/useModal'
+import ImageUpload from '@/components/ImageUpload'
+import Layout from '@/components/Layout'
+import Modal from '@/components/Modal'
+import { getEventById } from '@/lib/events'
+import styles from '@/styles/Form.module.sass'
+import { ErrorResponse } from '@/types/errorResponse'
+import { Event } from '@/types/event'
+import { EventResponse } from '@/types/eventResponse'
+import { EventImage } from '@/types/ImageUploadResponse'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetServerSideProps, NextPage } from 'next'
@@ -9,16 +19,6 @@ import { ParsedUrlQuery } from 'querystring'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useModal from '../../../components/hooks/useModal'
-import ImageUpload from '../../../components/ImageUpload'
-import Layout from '../../../components/Layout'
-import Modal from '../../../components/Modal'
-import { getEventById } from '../../../lib/events'
-import { ErrorResponse } from '../../../types/errorResponse'
-import { Event } from '../../../types/event'
-import { EventResponse } from '../../../types/eventResponse'
-import { EventImage } from '../../../types/ImageUploadResponse'
-import styles from '/styles/Form.module.sass'
 
 type Props = {
   event: Event
@@ -55,7 +55,7 @@ const EditEventPage: NextPage<Props> = ({ event }) => {
       toast.error(evt.error.message)
       throw new Error(evt.error.message)
     } else {
-      toast.success('Event creted')
+      toast.success('Event created')
       router.push(`/events/${evt.data.attributes.slug}`)
     }
   }
@@ -192,7 +192,7 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
-  params,
+  params, req
 }) => {
   const id = params?.id
   const url = `${process.env.NEXT_PUBLIC_API_URL}/events/${id}`

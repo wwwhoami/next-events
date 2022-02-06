@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { FormEvent, useState } from 'react'
-import styles from '/styles/Search.module.sass'
+import styles from '@/styles/Search.module.sass'
 
 type Props = {}
 

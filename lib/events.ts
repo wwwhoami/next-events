@@ -1,9 +1,9 @@
 import qs from 'qs'
-import { ErrorResponse } from '../types/errorResponse'
-import { Event } from '../types/event'
-import { EventImageData, EventResponse } from '../types/eventResponse'
-import { EventsResponse, Meta } from '../types/eventsResponse'
-import { EventImage } from '../types/ImageUploadResponse'
+import { ErrorResponse } from '@/types/errorResponse'
+import { Event } from '@/types/event'
+import { EventImageData, EventResponse } from '@/types/eventResponse'
+import { EventsResponse, Meta } from '@/types/eventsResponse'
+import { EventImage } from '@/types/ImageUploadResponse'
 
 function imageDeepCopy(image: EventImageData) {
   return {

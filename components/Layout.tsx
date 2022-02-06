@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
-import styles from '../styles/Layout.module.sass'
+import styles from '@/styles/Layout.module.sass'
 import Footer from './Footer'
 import Header from './Header'
 import Showcase from './Showcase'

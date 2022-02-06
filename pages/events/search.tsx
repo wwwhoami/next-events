@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import qs from 'qs'
 import React from 'react'
-import EventItem from '../../components/EventItem'
-import Layout from '../../components/Layout'
-import { getEvents } from '../../lib/events'
-import { Event } from '../../types/event'
+import EventItem from '@/components/EventItem'
+import Layout from '@/components/Layout'
+import { getEvents } from '@/lib/events'
+import { Event } from '@/types/event'
 
 type Props = {
   events?: Event[]

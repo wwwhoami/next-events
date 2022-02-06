@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import { createPortal } from 'react-dom'
 import FocusLock from 'react-focus-lock'
-import styles from '/styles/Modal.module.sass'
+import styles from '@/styles/Modal.module.sass'
 
 type Props = {
   isShown: boolean
