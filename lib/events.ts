@@ -145,3 +145,49 @@ export async function uploadImage(formData: FormData) {
 
   return image[0]
 }
+
+export async function getUserEvents(
+  url: string,
+  jwt: string
+): Promise<{ events: Event[]; meta: Meta }> {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+
+  const eventsResponse: EventsResponse | ErrorResponse = await res.json()
+
+  if ('error' in eventsResponse) {
+    throw new Error(eventsResponse.error.message)
+  }
+
+  const meta = eventsResponse.meta
+  const events = eventsResponse.data.map((event) => {
+    const { id } = event
+    const { name, venue, address, performers, datetime, description, slug } =
+      event.attributes
+
+    const eventImage = event.attributes.image?.data
+    let image: EventImage | undefined
+    if (eventImage) image = imageDeepCopy(eventImage)
+
+    return {
+      id,
+      name,
+      slug,
+      venue,
+      address,
+      performers,
+      datetime,
+      description,
+      image,
+    }
+  })
+
+  return {
+    events,
+    meta,
+  }
+}

@@ -11,7 +11,7 @@ import styles from '@/styles/Home.module.sass'
 const PAGE_SIZE = 5
 
 type Props = {
-  events: Event[]
+  events: Event[] | []
   total: number
   page: number
 }

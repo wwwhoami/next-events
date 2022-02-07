@@ -50,11 +50,11 @@ const EventPage: NextPage<Props> = ({ event }) => {
         <div className={styles.controls}>
           <Link href={`/events/edit/${id}`}>
             <a>
-              <FontAwesomeIcon icon={faPencilAlt} />
+              <FontAwesomeIcon icon={faPencilAlt} /> Edit
             </a>
           </Link>
           <a className={styles.delete} onClick={deleteEvent}>
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faTimes} /> Delete
           </a>
         </div>
         <span>
@@ -95,8 +95,6 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const url = process.env.NEXT_PUBLIC_API_URL + `/events`
-
   const paths = await getAllEventsSlugs()
 
   return {
