@@ -28,7 +28,7 @@ const EditEventPage: NextPage<Props> = ({ event }) => {
   const [values, setValues] = useState<Event>({
     ...event,
   })
-  const [image, setImage] = useState<EventImage | undefined>(event?.image)
+  const [image, setImage] = useState<EventImage | null>(event?.image)
 
   const [isShown, toggle] = useModal()
 
@@ -192,7 +192,8 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
-  params, req
+  params,
+  req,
 }) => {
   const id = params?.id
   const url = `${process.env.NEXT_PUBLIC_API_URL}/events/${id}`

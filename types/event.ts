@@ -9,5 +9,5 @@ export type Event = {
   performers: string
   datetime: string
   description: string
-  image?: EventImage
+  image: EventImage | null
 }

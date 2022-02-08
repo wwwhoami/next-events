@@ -1,22 +1,27 @@
+import useModal from '@/components/hooks/useModal'
+import ImageUpload from '@/components/ImageUpload'
+import Layout from '@/components/Layout'
+import Modal from '@/components/Modal'
+import { ErrorResponse } from '@/types/errorResponse'
+import { Event } from '@/types/event'
+import { EventResponse } from '@/types/eventResponse'
+import { EventImage } from '@/types/ImageUploadResponse'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useModal from '../../components/hooks/useModal'
-import ImageUpload from '../../components/ImageUpload'
-import Layout from '../../components/Layout'
-import Modal from '../../components/Modal'
-import { ErrorResponse } from '../../types/errorResponse'
-import { Event } from '../../types/event'
-import { EventResponse } from '../../types/eventResponse'
-import { EventImage } from '../../types/ImageUploadResponse'
 import styles from '/styles/Form.module.sass'
 
-const AddEventPage = () => {
+type Props = {
+  jwt: string
+}
+
+const AddEventPage: NextPage<Props> = ({ jwt }) => {
   const [values, setValues] = useState<Omit<Event, 'id' | 'slug'>>({
     name: '',
     venue: '',
@@ -24,8 +29,10 @@ const AddEventPage = () => {
     performers: '',
     datetime: '',
     description: '',
+    image: null
   })
-  const [image, setImage] = useState<EventImage | undefined>()
+
+  const [image, setImage] = useState<EventImage | null>(null)
 
   const [isShown, toggle] = useModal()
 
@@ -38,6 +45,7 @@ const AddEventPage = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({ data: values }),
     })
@@ -178,3 +186,15 @@ const AddEventPage = () => {
 }
 
 export default AddEventPage
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+}) => {
+  const jwt = req.cookies['jwt']
+
+  return {
+    props: {
+      jwt,
+    },
+  }
+}

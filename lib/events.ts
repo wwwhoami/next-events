@@ -37,8 +37,9 @@ export async function getEvents(
       event.attributes
 
     const eventImage = event.attributes.image?.data
-    let image: EventImage | undefined
-    if (eventImage) image = imageDeepCopy(eventImage)
+    const image: EventImage | null = eventImage
+      ? imageDeepCopy(eventImage)
+      : null
 
     return {
       id,
@@ -69,8 +70,7 @@ export async function getEventBySlug(url: string): Promise<Event> {
   const { meta } = eventResponse
 
   const eventImage = eventResponse.data[0].attributes.image?.data
-  let image: EventImage | undefined
-  if (eventImage) image = imageDeepCopy(eventImage)
+  const image: EventImage | null = eventImage ? imageDeepCopy(eventImage) : null
 
   return {
     id,
@@ -97,8 +97,7 @@ export async function getEventById(url: string): Promise<Event> {
     eventResponse.data.attributes
 
   const eventImage = eventResponse.data.attributes.image?.data
-  let image: EventImage | undefined
-  if (eventImage) image = imageDeepCopy(eventImage)
+  const image: EventImage | null = eventImage ? imageDeepCopy(eventImage) : null
 
   return {
     id,
@@ -170,8 +169,9 @@ export async function getUserEvents(
       event.attributes
 
     const eventImage = event.attributes.image?.data
-    let image: EventImage | undefined
-    if (eventImage) image = imageDeepCopy(eventImage)
+    const image: EventImage | null = eventImage
+      ? imageDeepCopy(eventImage)
+      : null
 
     return {
       id,

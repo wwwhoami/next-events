@@ -1,3 +1,9 @@
+import Layout from '@/components/Layout'
+import { getAllEventsSlugs, getEventBySlug } from '@/lib/events'
+import styles from '@/styles/Event.module.sass'
+import { ErrorResponse } from '@/types/errorResponse'
+import { Event } from '@/types/event'
+import { EventResponse } from '@/types/eventResponse'
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
@@ -8,12 +14,6 @@ import qs from 'qs'
 import { ParsedUrlQuery } from 'querystring'
 import React, { FormEvent } from 'react'
 import { toast } from 'react-toastify'
-import Layout from '../../components/Layout'
-import { getAllEventsSlugs, getEventBySlug } from '../../lib/events'
-import { ErrorResponse } from '../../types/errorResponse'
-import { Event } from '../../types/event'
-import { EventResponse } from '../../types/eventResponse'
-import styles from '/styles/Event.module.sass'
 
 type Props = {
   event: Event
