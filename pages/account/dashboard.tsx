@@ -1,13 +1,13 @@
-import EventItem from '@/components/EventItem'
+import DashboardEvent from '@/components/DashboardEvent'
 import Layout from '@/components/Layout'
 import Pagination from '@/components/Pagination'
 import { getUserEvents } from '@/lib/events'
+import styles from '@/styles/Dashboard.module.sass'
 import { Event } from '@/types/event'
 import { GetServerSideProps, NextPage } from 'next/types'
 import qs from 'qs'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
-import styles from '@/styles/Dashboard.module.sass'
 
 const PAGE_SIZE = 5
 
@@ -15,9 +15,10 @@ type Props = {
   events: Event[] | []
   total: number
   page: number
+  jwt: string
 }
 
-const DashBoardPage: NextPage<Props> = ({ events, page, total }) => {
+const DashBoardPage: NextPage<Props> = ({ events, page, total, jwt }) => {
   return (
     <Layout title="User Dashboard">
       <div className={styles.dash}>
@@ -26,7 +27,7 @@ const DashBoardPage: NextPage<Props> = ({ events, page, total }) => {
         {events.length === 0 && <h2>No events :(</h2>}
 
         {events.map((evt) => (
-          <EventItem key={evt.id} event={evt} />
+          <DashboardEvent key={evt.id} event={evt} jwt={jwt} />
         ))}
       </div>
 
@@ -71,6 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
       events,
       total,
       page: parseInt(page as string),
+      jwt,
     },
   }
 }

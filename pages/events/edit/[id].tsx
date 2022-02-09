@@ -14,30 +14,41 @@ import { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import qs from 'qs'
 import { ParsedUrlQuery } from 'querystring'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 type Props = {
   event: Event
+  jwt: string | null
 }
 
-const EditEventPage: NextPage<Props> = ({ event }) => {
+const EditEventPage: NextPage<Props> = ({ event, jwt }) => {
   const [values, setValues] = useState<Event>({
     ...event,
   })
+
   const [image, setImage] = useState<EventImage | null>(event?.image)
 
   const [isShown, toggle] = useModal()
 
   const router = useRouter()
 
+  // Update datetime to local string compatible with input datetime-local only on first render
+  useEffect(() => {
+    const d = new Date(values.datetime)
+    setValues((prev) => ({
+      ...prev,
+      datetime: new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, -1),
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    console.log({ data: { ...values, image: image?.id } })
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/events/${values.id}`,
@@ -45,17 +56,25 @@ const EditEventPage: NextPage<Props> = ({ event }) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
         },
-        body: JSON.stringify({ data: { ...values, image: image?.id } }),
+        body: JSON.stringify({
+          data: {
+            ...values,
+            image: image?.id,
+            datetime: new Date(values.datetime).toISOString(),
+          },
+        }),
       }
     )
+
     const evt: EventResponse | ErrorResponse = await res.json()
 
     if ('error' in evt) {
       toast.error(evt.error.message)
       throw new Error(evt.error.message)
     } else {
-      toast.success('Event created')
+      toast.success('Event updated')
       router.push(`/events/${evt.data.attributes.slug}`)
     }
   }
@@ -140,7 +159,7 @@ const EditEventPage: NextPage<Props> = ({ event }) => {
                 name="datetime"
                 id="datetime"
                 required
-                value={values.datetime.slice(0, 16)}
+                value={values.datetime}
                 onChange={handleInputChange}
               />
             </div>
@@ -178,7 +197,7 @@ const EditEventPage: NextPage<Props> = ({ event }) => {
         </form>
 
         <Modal isShown={isShown} onClose={toggle} title="Upload Image">
-          <ImageUpload imageUploaded={imageUploaded} />
+          <ImageUpload imageUploaded={imageUploaded} jwt={jwt} />
         </Modal>
       </Layout>
     </>
@@ -195,19 +214,20 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async ({
   params,
   req,
 }) => {
-  const id = params?.id
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/events/${id}`
-  const search = qs.stringify({
-    populate: 'image',
-  })
+  const id = params?.id!
 
-  const event = await getEventById(`${url}?${search}`)
+  console.log(id)
+
+  const event = await getEventById(id)
 
   if (event === null) return { notFound: true }
+
+  const jwt = req.cookies['jwt'] ?? null
 
   return {
     props: {
       event,
+      jwt,
     },
   }
 }

@@ -1,11 +1,11 @@
-import { faEye, faEyeSlash, faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
-import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import Layout from '@/components/Layout'
 import { useAuth } from '@/context/AuthContext'
 import styles from '@/styles/AuthForm.module.sass'
+import { faEye, faEyeSlash, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
+import Link from 'next/link'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {}

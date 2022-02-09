@@ -85,8 +85,12 @@ export async function getEventBySlug(url: string): Promise<Event> {
   }
 }
 
-export async function getEventById(url: string): Promise<Event> {
-  const res = await fetch(url)
+export async function getEventById(eventId: string): Promise<Event> {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/events/${eventId}`
+  const search = qs.stringify({
+    populate: 'image',
+  })
+  const res = await fetch(`${url}?${search}`)
 
   const eventResponse: EventResponse | ErrorResponse = await res.json()
 
@@ -130,11 +134,14 @@ export async function getAllEventsSlugs() {
   }))
 }
 
-export async function uploadImage(formData: FormData) {
+export async function uploadImage(formData: FormData, jwt: string) {
   const url = process.env.NEXT_PUBLIC_API_URL + `/upload`
 
   const res = await fetch(url, {
     method: 'POST',
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
     body: formData,
   })
 

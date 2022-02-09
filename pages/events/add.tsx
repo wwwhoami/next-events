@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import styles from '/styles/Form.module.sass'
 
 type Props = {
-  jwt: string
+  jwt: string | null
 }
 
 const AddEventPage: NextPage<Props> = ({ jwt }) => {
@@ -29,7 +29,7 @@ const AddEventPage: NextPage<Props> = ({ jwt }) => {
     performers: '',
     datetime: '',
     description: '',
-    image: null
+    image: null,
   })
 
   const [image, setImage] = useState<EventImage | null>(null)
@@ -69,7 +69,6 @@ const AddEventPage: NextPage<Props> = ({ jwt }) => {
 
       toast.success('Image uploaded')
     } catch (err) {
-      console.log(err)
       toast.error('Something went wrong')
     }
   }
@@ -178,7 +177,7 @@ const AddEventPage: NextPage<Props> = ({ jwt }) => {
         </form>
 
         <Modal isShown={isShown} onClose={toggle} title="Upload Image">
-          <ImageUpload imageUploaded={imageUploaded} />
+          <ImageUpload imageUploaded={imageUploaded} jwt={jwt} />
         </Modal>
       </Layout>
     </>
@@ -190,7 +189,7 @@ export default AddEventPage
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
 }) => {
-  const jwt = req.cookies['jwt']
+  const jwt = req.cookies['jwt'] ?? null
 
   return {
     props: {

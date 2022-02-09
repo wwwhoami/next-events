@@ -1,53 +1,26 @@
 import Layout from '@/components/Layout'
 import { getAllEventsSlugs, getEventBySlug } from '@/lib/events'
 import styles from '@/styles/Event.module.sass'
-import { ErrorResponse } from '@/types/errorResponse'
 import { Event } from '@/types/event'
-import { EventResponse } from '@/types/eventResponse'
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import qs from 'qs'
 import { ParsedUrlQuery } from 'querystring'
-import React, { FormEvent } from 'react'
-import { toast } from 'react-toastify'
+import React from 'react'
 
 type Props = {
   event: Event
 }
 
 const EventPage: NextPage<Props> = ({ event }) => {
-  const { id, name, image, performers, description, venue, address } = event
+  const { name, image, performers, description, venue, address } = event
   const datetime = new Date(event.datetime)
-
-  const router = useRouter()
-
-  const deleteEvent = async (e: FormEvent<HTMLAnchorElement>) => {
-    if (confirm('Ary you sure?')) {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/events/${id}`
-
-      const res = await fetch(url, {
-        method: 'DELETE',
-      })
-
-      const data: EventResponse | ErrorResponse = await res.json()
-
-      if (!res.ok && 'error' in data) {
-        toast.error(data.error.message)
-      } else {
-        toast.success('Deleted successfully')
-        router.push('/events')
-      }
-    }
-  }
 
   return (
     <Layout>
       <div className={styles.event}>
-        <div className={styles.controls}>
+        {/* <div className={styles.controls}>
           <Link href={`/events/edit/${id}`}>
             <a>
               <FontAwesomeIcon icon={faPencilAlt} /> Edit
@@ -56,7 +29,7 @@ const EventPage: NextPage<Props> = ({ event }) => {
           <a className={styles.delete} onClick={deleteEvent}>
             <FontAwesomeIcon icon={faTimes} /> Delete
           </a>
-        </div>
+        </div> */}
         <span>
           {datetime.toLocaleDateString()} at{' '}
           {datetime.toLocaleTimeString([], {

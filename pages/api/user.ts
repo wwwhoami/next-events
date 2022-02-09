@@ -1,6 +1,5 @@
 import { User } from '@/types/authResponse'
 import { ErrorResponse } from '@/types/errorResponse'
-import cookie from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -19,7 +18,7 @@ export default async function handler(
       return
     }
 
-    const { jwt } = cookie.parse(req.headers.cookie)
+    const jwt = req.cookies['jwt']
 
     const strapiRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
